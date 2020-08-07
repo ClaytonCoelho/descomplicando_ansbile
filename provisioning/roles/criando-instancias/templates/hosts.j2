@@ -1,0 +1,10 @@
+[k8s-master]
+{{ ec2.instances[0].public_ip }}
+
+[k8s-workers]
+{{ ec2.instances[1].public_ip }}
+{{ ec2.instances[2].public_ip }}
+
+[k8s-workers:vars]
+K8S_MASTER_NODE_IP={{ ec2.instances[0].private_ip }}
+K8S_API_SECURE_PORT=6443

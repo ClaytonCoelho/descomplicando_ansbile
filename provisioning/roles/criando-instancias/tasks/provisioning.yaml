@@ -99,13 +99,18 @@
     insertafter="[kubernetes]" line={{ item.public_ip }}
   with_items: "{{ ec2.instances }}"
 
-
 - name: Adicionando o IP privado da instancia criada ao arquivo hosts
   local_action: lineinfile
     dest="./hosts"
     regexp={{ item.private_ip }}
     insertafter="[kubernetes]" line={{ item.private_ip }}
   with_items: "{{ ec2.instances }}"
+
+- name: Copiando o arquivo de hosts para a pasta inventory
+  template:
+    src: hosts.j2
+    dest: ../inventory/hosts
+  register: copiando_hosts
 
 - name: Esperando o SSH
   local_action: wait_for
